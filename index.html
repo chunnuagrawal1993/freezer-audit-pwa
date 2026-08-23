@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ITC Foods | Asset & Freezer Audit</title>
+  <link rel="manifest" href="./manifest.json" />
+  <meta name="theme-color" content="#002B66" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --itc-blue: #002B66; --itc-gold: #C5A059; }
+    .bg-itc { background-color: var(--itc-blue); }
+    .text-itc { color: var(--itc-blue); }
+    .border-itc { border-color: var(--itc-blue); }
+    .bg-gold { background-color: var(--itc-gold); }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex justify-center">
+
+  <div id="app" class="w-full max-w-md bg-white min-h-screen shadow-xl flex flex-col relative pb-8">
+    
+    <!-- Top Header -->
+    <header class="bg-itc text-white px-4 py-3 flex items-center justify-between shadow-md">
+      <div class="flex items-center space-x-2">
+        <div class="bg-white p-1 rounded">
+          <svg class="w-6 h-6 text-itc fill-current" viewBox="0 0 24 24">
+            <polygon points="12,2 2,22 22,22"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="font-bold text-sm tracking-wide">ITC LIMITED</h1>
+          <p class="text-[10px] text-slate-300">Foods Division • Freezer Audit</p>
+        </div>
+      </div>
+      <button id="logoutBtn" onclick="logout()" class="hidden text-xs bg-red-600/80 px-2 py-1 rounded text-white">Logout</button>
+    </header>
+
+    <!-- Content Area -->
+    <main class="p-4 flex-1">
+      
+      <!-- SCREEN 1: LOGIN -->
+      <section id="loginScreen" class="space-y-5 pt-8">
+        <div class="text-center space-y-1">
+          <h2 class="text-xl font-bold text-itc">Field Executive Portal</h2>
+          <p class="text-xs text-slate-500">Sign in to begin assigned store audits</p>
+        </div>
+
+        <form onsubmit="handleLogin(event)" class="space-y-4 pt-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Username</label>
+            <input type="text" id="username" required class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-blue-900 outline-none" placeholder="e.g. itcadmin" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Password</label>
+            <input type="password" id="password" required class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-blue-900 outline-none" placeholder="••••••••" />
+          </div>
+          <div id="loginError" class="text-red-600 text-xs hidden font-medium">Invalid credentials.</div>
+          <button type="submit" class="w-full bg-itc text-white font-semibold py-2.5 rounded-lg text-sm shadow hover:opacity-95">Authenticate</button>
+        </form>
+      </section>
+
+      <!-- SCREEN 2: GEOFENCE & STORE VERIFICATION -->
+      <section id="auditScreen" class="hidden space-y-4">
+        
+        <!-- Store Master Card -->
+        <div class="border border-slate-200 rounded-xl p-4 bg-slate-50 shadow-sm space-y-3">
+          <div class="flex justify-between items-start">
+            <div>
+              <span class="text-[10px] bg-blue-100 text-itc font-bold px-2 py-0.5 rounded">STR-560034</span>
+              <h3 class="text-base font-bold text-slate-800 mt-1">Shree Sai Supermarket</h3>
+              <p class="text-xs text-slate-500">Owner: Ramesh Kumar (9876543210)</p>
+            </div>
+            <span id="geoBadge" class="text-[10px] font-bold px-2 py-1 rounded bg-amber-100 text-amber-800">Checking GPS...</span>
+          </div>
+
+          <!-- Address Edit Section -->
+          <div class="pt-2 border-t border-slate-200">
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-xs font-bold text-slate-700">Master Address:</span>
+              <button onclick="toggleAddressEdit()" class="text-xs text-blue-800 font-semibold underline" id="editToggleBtn">Edit Address</button>
+            </div>
+            <p id="staticAddress" class="text-xs text-slate-600 bg-white p-2 rounded border border-slate-200">
+              #12, 12th Main Road, 4th Block, Koramangala, Bengaluru - 560034
+            </p>
+            <div id="editAddressForm" class="hidden mt-2 space-y-2">
+              <textarea id="addressInput" class="w-full text-xs p-2 border rounded-lg focus:ring-2 focus:ring-blue-900 outline-none" rows="2">#12, 12th Main Road, 4th Block, Koramangala, Bengaluru - 560034</textarea>
+              <button onclick="saveAddress()" class="w-full bg-slate-800 text-white text-xs py-1.5 rounded font-medium">Save Address Update</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Geofence Control -->
+        <div class="bg-blue-50 border border-blue-200 p-3 rounded-xl flex items-center justify-between">
+          <div>
+            <p class="text-xs font-bold text-itc">Geofence Radius: 50m</p>
+            <p id="geoDistanceText" class="text-[11px] text-slate-600">Simulating GPS check...</p>
+          </div>
+          <button onclick="simulateGeofence()" class="text-xs bg-itc text-white px-3 py-1.5 rounded font-medium">Toggle Within 50m</button>
+        </div>
+
+        <!-- SCREEN 3: FREEZER CAMERA AUDIT -->
+        <div id="cameraModule" class="border border-slate-200 rounded-xl p-4 bg-white space-y-3 opacity-50 pointer-events-none">
+          <div class="flex justify-between items-center">
+            <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Freezer Compliance Camera</h4>
+            <span class="text-[10px] text-slate-500 font-medium">Whitelist: ITC, Prasuma, Meatigo</span>
+          </div>
+
+          <div class="relative bg-slate-900 rounded-xl aspect-[4/3] flex items-center justify-center overflow-hidden border border-slate-300">
+            <video id="webcam" autoplay playsinline class="w-full h-full object-cover hidden"></video>
+            <canvas id="photoCanvas" class="w-full h-full object-cover hidden"></canvas>
+            
+            <div id="cameraPlaceholder" class="text-center p-4">
+              <svg class="w-10 h-10 text-slate-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <p class="text-xs text-slate-300">Unlock GPS Check-In to Enable Camera</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <button id="startCamBtn" onclick="initCamera()" class="bg-slate-700 text-white py-2 rounded-lg text-xs font-semibold">Open Live Camera</button>
+            <button id="snapBtn" onclick="captureAndAudit()" disabled class="bg-itc text-white py-2 rounded-lg text-xs font-semibold disabled:opacity-40">Capture & Inspect</button>
+          </div>
+        </div>
+
+        <!-- SCREEN 4: AUDIT SUMMARY & FLAGS -->
+        <div id="resultCard" class="hidden border rounded-xl p-4 space-y-3 bg-white">
+          <div class="flex justify-between items-center pb-2 border-b">
+            <h4 class="text-sm font-bold text-slate-800">Freezer Compliance Report</h4>
+            <span id="complianceStatusBadge" class="text-xs font-bold px-2 py-0.5 rounded"></span>
+          </div>
+
+          <div class="space-y-2 text-xs">
+            <div class="flex justify-between"><span class="text-slate-500">Authorized SKUs Found:</span><span class="font-bold text-emerald-700" id="authSkuCount">0</span></div>
+            <div class="flex justify-between"><span class="text-slate-500">Unauthorized SKUs Detected:</span><span class="font-bold text-red-600" id="unauthSkuCount">0</span></div>
+            <div id="flagDetail" class="p-2 bg-red-50 border border-red-200 rounded text-red-700 text-[11px] leading-tight"></div>
+          </div>
+
+          <button onclick="submitAudit()" class="w-full bg-emerald-600 text-white py-2.5 rounded-lg text-xs font-bold hover:bg-emerald-700">Submit Verification to Master Server</button>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    // PWA Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').catch(console.error);
+    }
+
+    let isWithinGeofence = false;
+    let videoStream = null;
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const u = document.getElementById('username').value.trim();
+      const p = document.getElementById('password').value.trim();
+
+      if (u === 'itcadmin' && p === 'ITC@2026') {
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('auditScreen').classList.remove('hidden');
+        document.getElementById('logoutBtn').classList.remove('hidden');
+        checkRealGps();
+      } else {
+        document.getElementById('loginError').classList.remove('hidden');
+      }
+    }
+
+    function logout() {
+      if (videoStream) {
+        videoStream.getTracks().forEach(track => track.stop());
+      }
+      location.reload();
+    }
+
+    function checkRealGps() {
+      const geoBadge = document.getElementById('geoBadge');
+      const geoText = document.getElementById('geoDistanceText');
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            geoBadge.textContent = 'GPS Locked';
+            geoBadge.className = 'text-[10px] font-bold px-2 py-1 rounded bg-blue-100 text-blue-800';
+            geoText.textContent = `Lat: ${pos.coords.latitude.toFixed(4)}, Lon: ${pos.coords.longitude.toFixed(4)}`;
+          },
+          () => {
+            geoBadge.textContent = 'Simulated GPS';
+            geoText.textContent = 'Hardware GPS unavailable. Use manual toggle.';
+          }
+        );
+      }
+    }
+
+    function simulateGeofence() {
+      isWithinGeofence = !isWithinGeofence;
+      const geoBadge = document.getElementById('geoBadge');
+      const geoText = document.getElementById('geoDistanceText');
+      const camModule = document.getElementById('cameraModule');
+
+      if (isWithinGeofence) {
+        geoBadge.textContent = 'Within Geofence (18m)';
+        geoBadge.className = 'text-[10px] font-bold px-2 py-1 rounded bg-emerald-100 text-emerald-800';
+        geoText.textContent = 'Verified inside 50m store radius';
+        camModule.classList.remove('opacity-50', 'pointer-events-none');
+      } else {
+        geoBadge.textContent = 'Outside Geofence (340m)';
+        geoBadge.className = 'text-[10px] font-bold px-2 py-1 rounded bg-red-100 text-red-800';
+        geoText.textContent = 'Executive is 340m away from master pin';
+        camModule.classList.add('opacity-50', 'pointer-events-none');
+      }
+    }
+
+    function toggleAddressEdit() {
+      const form = document.getElementById('editAddressForm');
+      form.classList.toggle('hidden');
+    }
+
+    function saveAddress() {
+      const updated = document.getElementById('addressInput').value;
+      const staticAddr = document.getElementById('staticAddress');
+      staticAddr.textContent = updated + ' (Edited by Executive - Pending Sync)';
+      staticAddr.classList.add('border-amber-400', 'bg-amber-50');
+      toggleAddressEdit();
+    }
+
+    async function initCamera() {
+      const video = document.getElementById('webcam');
+      const placeholder = document.getElementById('cameraPlaceholder');
+      try {
+        videoStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+        video.srcObject = videoStream;
+        video.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+        document.getElementById('snapBtn').disabled = false;
+      } catch (err) {
+        alert('Live camera access blocked or unsupported. Simulating camera capture instead.');
+        document.getElementById('snapBtn').disabled = false;
+      }
+    }
+
+    function captureAndAudit() {
+      const resultCard = document.getElementById('resultCard');
+      const badge = document.getElementById('complianceStatusBadge');
+      const authCount = document.getElementById('authSkuCount');
+      const unauthCount = document.getElementById('unauthSkuCount');
+      const flagDetail = document.getElementById('flagDetail');
+
+      resultCard.classList.remove('hidden');
+
+      // Simulated detection logic
+      const hasViolation = Math.random() > 0.4;
+
+      if (!hasViolation) {
+        badge.textContent = 'COMPLIANT FREEZER';
+        badge.className = 'text-xs font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800';
+        authCount.textContent = '6 Units (ITC Master Chef, Prasuma)';
+        unauthCount.textContent = '0 Units';
+        flagDetail.className = 'p-2 bg-emerald-50 border border-emerald-200 rounded text-emerald-800 text-[11px]';
+        flagDetail.textContent = '100% Whitelist compliance. No unauthorized third-party brands present.';
+      } else {
+        badge.textContent = 'NON-COMPLIANT / FLAGGED';
+        badge.className = 'text-xs font-bold px-2 py-0.5 rounded bg-red-100 text-red-800';
+        authCount.textContent = '4 Units (ITC Master Chef, Meatigo)';
+        unauthCount.textContent = '3 Units (Competitor Detected)';
+        flagDetail.className = 'p-2 bg-red-50 border border-red-200 rounded text-red-700 text-[11px]';
+        flagDetail.textContent = 'FLAGGED: Unauthorized frozen items detected inside dedicated ITC freezer. Action required.';
+      }
+    }
+
+    function submitAudit() {
+      alert('Verification packet synced to ITC Central Master Database.');
+      location.reload();
+    }
+  </script>
+</body>
+</html>
