@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>ITC Promoter Pulse | Freezer Verification</title>
   <link rel="manifest" href="./manifest.json" />
-  <meta name="theme-color" content="#0d3b66" />
+  <meta name="theme-color" content="#0A3778" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,20 +28,42 @@
 </head>
 <body class="bg-[#E9EFF7] min-h-screen flex items-center justify-center p-3 antialiased">
 
+  <!-- SVG Definition for ITC Enduring Value Logo -->
+  <svg style="display:none;">
+    <defs>
+      <g id="itc-brand-logo">
+        <svg viewBox="0 0 400 360" width="100%" height="100%">
+          <!-- Outer Triangle Frames -->
+          <polygon points="200,20 60,250 145,250 200,150 255,250 340,250" fill="#0A3778" />
+          <polygon points="200,60 172,250 228,250" fill="#0A3778" />
+          <!-- ITC Lettering Cutout Area -->
+          <path d="M 85 240 L 140 160 L 165 240 Z" fill="#0A3778" />
+          <path d="M 160 215 L 240 215 L 230 240 L 170 240 Z" fill="#0A3778" />
+          <path d="M 185 200 L 215 200 L 210 240 L 190 240 Z" fill="#0A3778" />
+          <path d="M 235 240 L 260 160 L 315 240 Z" fill="#0A3778" />
+          <path d="M 245 180 L 300 180 L 285 200 L 255 200 Z" fill="#0A3778" />
+          <!-- Enduring Value Serif Text -->
+          <text x="200" y="315" font-family="'Times New Roman', Georgia, serif" font-size="44" font-weight="bold" fill="#0A3778" text-anchor="middle" letter-spacing="1">Enduring Value</text>
+        </svg>
+      </g>
+    </defs>
+  </svg>
+
+  <!-- Main App Shell -->
   <div id="app" class="w-full max-w-[440px] min-h-[640px] flex flex-col justify-center relative">
     
+    <!-- ==================== SCREEN 1: MATCHING LOGIN CARD ==================== -->
     <section id="loginScreen" class="w-full bg-white rounded-[28px] shadow-[0_12px_40px_rgba(10,55,120,0.08)] border-t-[6px] border-[#0A3778] p-8 sm:p-9 relative overflow-hidden transition-all duration-300">
       
+      <!-- Top Logo Section -->
       <div class="flex flex-col items-center justify-center pt-2">
-        <img 
-          src="itc-logo.png" 
-          alt="ITC Enduring Value" 
-          class="h-28 w-auto object-contain"
-          onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/ff/ITC_Limited_Logo.svg'" 
-        />
-        <div class="w-full h-[1px] bg-slate-200 mt-6 mb-6"></div>
+        <div class="w-40 h-32 flex items-center justify-center">
+          <svg class="w-full h-full"><use href="#itc-brand-logo"/></svg>
+        </div>
+        <div class="w-full h-[1px] bg-slate-200 mt-4 mb-6"></div>
       </div>
 
+      <!-- Typography Matching Reference -->
       <div class="text-center space-y-2 mb-7">
         <span class="block text-[11px] font-extrabold uppercase tracking-[0.14em] text-[#0A3778]">
           Promoter Assessment Platform
@@ -54,6 +76,7 @@
         </p>
       </div>
 
+      <!-- Login Form -->
       <form onsubmit="handleLogin(event)" class="space-y-4">
         <div>
           <label class="block text-[13px] font-bold text-[#0D2447] mb-1.5">Username</label>
@@ -78,7 +101,7 @@
         </div>
 
         <div id="loginError" class="text-red-600 text-xs hidden font-medium text-center pt-1">
-          Invalid credentials. (Use itcadmin / ITC@2026)
+          Invalid username or password. (Use itcadmin / ITC@2026)
         </div>
 
         <div class="pt-2">
@@ -91,6 +114,7 @@
         </div>
       </form>
 
+      <!-- Bottom Footnote -->
       <div class="mt-8 text-center">
         <p class="text-[11.5px] text-slate-500 font-medium">
           ITC Limited &middot; Internal use only
@@ -98,11 +122,15 @@
       </div>
     </section>
 
+    <!-- ==================== SCREEN 2: STORE SELECTION DASHBOARD ==================== -->
     <section id="storeListScreen" class="hidden w-full bg-white rounded-[28px] shadow-[0_12px_40px_rgba(10,55,120,0.08)] border-t-[6px] border-[#0A3778] p-6 space-y-4">
       
+      <!-- Top Bar -->
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-        <div class="flex items-center space-x-2">
-          <img src="itc-logo.png" alt="ITC Logo" class="h-6 w-auto object-contain" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/ff/ITC_Limited_Logo.svg'" />
+        <div class="flex items-center space-x-2.5">
+          <div class="w-8 h-8 flex items-center justify-center">
+            <svg class="w-full h-full"><use href="#itc-brand-logo"/></svg>
+          </div>
           <div>
             <h2 class="text-xs font-bold text-[#0D2447]">Assigned Route Beats</h2>
             <p class="text-[10px] text-slate-400">Bangalore South Cluster</p>
@@ -111,6 +139,7 @@
         <button onclick="logout()" class="text-[11px] font-semibold text-red-600 bg-red-50 hover:bg-red-100 px-2.5 py-1 rounded-lg transition">Logout</button>
       </div>
 
+      <!-- Search & Filters -->
       <div class="space-y-2">
         <div class="relative">
           <input 
@@ -125,28 +154,38 @@
           </svg>
         </div>
         <div class="flex justify-between items-center px-1">
-          <span class="text-[11px] font-semibold text-slate-500">Available Stores (<span id="storeCountDisplay">3</span>)</span>
+          <span class="text-[11px] font-semibold text-slate-500">Available Stores (<span id="storeCountDisplay">4</span>)</span>
           <span class="text-[10px] bg-blue-50 text-[#0A3778] font-bold px-2 py-0.5 rounded">GPS Fencing Active</span>
         </div>
       </div>
 
+      <!-- Store Cards Container -->
       <div id="storeListContainer" class="space-y-3 max-h-[420px] overflow-y-auto pr-1">
-        </div>
+        <!-- Rendered dynamically -->
+      </div>
     </section>
 
+    <!-- ==================== SCREEN 3: FREEZER AUDIT INTERFACE ==================== -->
     <section id="auditScreen" class="hidden w-full bg-white rounded-[28px] shadow-[0_12px_40px_rgba(10,55,120,0.08)] border-t-[6px] border-[#0A3778] p-6 space-y-4">
       
+      <!-- Header with Back Button & Brand Logo -->
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
         <button onclick="backToStoreList()" class="flex items-center space-x-1 text-xs font-bold text-[#0A3778] bg-blue-50 px-2.5 py-1.5 rounded-lg hover:bg-blue-100 transition">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
           <span>Stores</span>
         </button>
-        <div class="text-right">
-          <span id="activeStoreCode" class="text-[10px] font-extrabold bg-blue-100 text-[#0A3778] px-2 py-0.5 rounded">STR-CODE</span>
-          <h2 id="activeStoreName" class="text-xs font-bold text-[#0D2447] mt-0.5">Store Name</h2>
+        <div class="flex items-center space-x-2">
+          <div class="w-7 h-7 flex items-center justify-center">
+            <svg class="w-full h-full"><use href="#itc-brand-logo"/></svg>
+          </div>
+          <div class="text-right">
+            <span id="activeStoreCode" class="text-[10px] font-extrabold bg-blue-100 text-[#0A3778] px-2 py-0.5 rounded">STR-CODE</span>
+            <h2 id="activeStoreName" class="text-xs font-bold text-[#0D2447] mt-0.5 max-w-[140px] truncate">Store Name</h2>
+          </div>
         </div>
       </div>
 
+      <!-- Store Master & Inline Edit -->
       <div class="bg-itc-input border border-itc-input rounded-2xl p-4 space-y-2.5">
         <div class="flex justify-between items-center">
           <span class="text-[11px] font-bold text-[#0A3778] uppercase tracking-wider">Store Master Verification</span>
@@ -163,6 +202,7 @@
         </div>
       </div>
 
+      <!-- Geofence Lock Status -->
       <div class="border border-slate-200 p-3.5 rounded-2xl flex items-center justify-between">
         <div>
           <div class="flex items-center space-x-1.5">
@@ -174,6 +214,7 @@
         <button onclick="simulateGeofence()" class="text-xs bg-[#0A3778] text-white px-3 py-1.5 rounded-xl font-bold">Simulate &lt;50m</button>
       </div>
 
+      <!-- Camera Capture Card -->
       <div id="cameraModule" class="border border-slate-200 rounded-2xl p-4 space-y-3 opacity-40 pointer-events-none transition-opacity">
         <div class="flex justify-between items-center">
           <h4 class="text-xs font-bold text-[#0D2447]">Freezer Image Audit</h4>
@@ -197,6 +238,7 @@
         </div>
       </div>
 
+      <!-- Audit Report & Competitor Flagging -->
       <div id="resultCard" class="hidden border border-slate-200 rounded-2xl p-4 space-y-3 bg-white shadow-sm">
         <div class="flex justify-between items-center pb-2 border-b">
           <h4 class="text-xs font-bold text-[#0D2447]">Assessment Compliance Result</h4>
@@ -221,7 +263,6 @@
       navigator.serviceWorker.register('./sw.js').catch(console.error);
     }
 
-    // Sample Master Data for Multiple Stores
     const STORE_MASTER = [
       {
         id: 'STR-560034',
@@ -267,3 +308,187 @@
 
     function renderStoreList(storesToRender = STORE_MASTER) {
       const container = document.getElementById('storeListContainer');
+      document.getElementById('storeCountDisplay').textContent = storesToRender.length;
+      container.innerHTML = '';
+
+      if (storesToRender.length === 0) {
+        container.innerHTML = `<div class="p-6 text-center text-xs text-slate-400">No stores found matching your search.</div>`;
+        return;
+      }
+
+      storesToRender.forEach(store => {
+        const card = document.createElement('div');
+        card.className = "border border-slate-200 rounded-2xl p-4 bg-slate-50 hover:border-[#0A3778] hover:bg-blue-50/40 transition-all cursor-pointer space-y-2";
+        card.onclick = () => selectStore(store.id);
+
+        card.innerHTML = `
+          <div class="flex justify-between items-start">
+            <div>
+              <span class="text-[10px] font-extrabold text-[#0A3778] bg-blue-100 px-2 py-0.5 rounded">${store.id}</span>
+              <h3 class="text-xs font-bold text-slate-800 mt-1">${store.name}</h3>
+            </div>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded ${store.statusClass}">${store.status}</span>
+          </div>
+          <p class="text-[11px] text-slate-500 line-clamp-1">${store.address}</p>
+          <div class="flex justify-between items-center pt-1 text-[11px] border-t border-slate-200/60 font-medium">
+            <span class="text-slate-500">${store.owner.split(' ')[0]} (Owner)</span>
+            <span class="text-[#0A3778] font-bold flex items-center gap-1">
+              <svg class="w-3 h-3 text-[#0A3778]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+              ${store.distance}
+            </span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterStores() {
+      const q = document.getElementById('storeSearch').value.toLowerCase();
+      const filtered = STORE_MASTER.filter(s => 
+        s.name.toLowerCase().includes(q) || 
+        s.id.toLowerCase().includes(q) || 
+        s.address.toLowerCase().includes(q)
+      );
+      renderStoreList(filtered);
+    }
+
+    function selectStore(storeId) {
+      currentSelectedStore = STORE_MASTER.find(s => s.id === storeId);
+      if (!currentSelectedStore) return;
+
+      document.getElementById('storeListScreen').classList.add('hidden');
+      document.getElementById('auditScreen').classList.remove('hidden');
+
+      document.getElementById('activeStoreCode').textContent = currentSelectedStore.id;
+      document.getElementById('activeStoreName').textContent = currentSelectedStore.name;
+      document.getElementById('staticAddress').textContent = currentSelectedStore.address;
+      document.getElementById('addressInput').value = currentSelectedStore.address;
+
+      isWithinGeofence = false;
+      document.getElementById('geoStatusDot').className = 'h-2 w-2 rounded-full bg-amber-500';
+      document.getElementById('geoStatusTitle').textContent = 'GPS Outside Store';
+      document.getElementById('geoStatusTitle').className = 'text-xs font-bold text-[#0D2447]';
+      document.getElementById('geoDistanceText').textContent = currentSelectedStore.distance;
+      document.getElementById('cameraModule').classList.add('opacity-40', 'pointer-events-none');
+      document.getElementById('resultCard').classList.add('hidden');
+    }
+
+    function backToStoreList() {
+      if (videoStream) {
+        videoStream.getTracks().forEach(t => t.stop());
+        document.getElementById('webcam').classList.add('hidden');
+        document.getElementById('cameraPlaceholder').classList.remove('hidden');
+      }
+      document.getElementById('auditScreen').classList.add('hidden');
+      document.getElementById('storeListScreen').classList.remove('hidden');
+      renderStoreList();
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const u = document.getElementById('username').value.trim();
+      const p = document.getElementById('password').value.trim();
+
+      if (u === 'itcadmin' && p === 'ITC@2026') {
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('storeListScreen').classList.remove('hidden');
+        renderStoreList();
+      } else {
+        document.getElementById('loginError').classList.remove('hidden');
+      }
+    }
+
+    function logout() {
+      if (videoStream) videoStream.getTracks().forEach(t => t.stop());
+      location.reload();
+    }
+
+    function simulateGeofence() {
+      isWithinGeofence = !isWithinGeofence;
+      const dot = document.getElementById('geoStatusDot');
+      const title = document.getElementById('geoStatusTitle');
+      const text = document.getElementById('geoDistanceText');
+      const cam = document.getElementById('cameraModule');
+
+      if (isWithinGeofence) {
+        dot.className = 'h-2 w-2 rounded-full bg-emerald-500';
+        title.textContent = 'Inside Geofence (12m)';
+        title.className = 'text-xs font-bold text-emerald-800';
+        text.textContent = 'Executive verified on store premises';
+        cam.classList.remove('opacity-40', 'pointer-events-none');
+      } else {
+        dot.className = 'h-2 w-2 rounded-full bg-amber-500';
+        title.textContent = 'GPS Outside Store';
+        title.className = 'text-xs font-bold text-[#0D2447]';
+        text.textContent = currentSelectedStore ? currentSelectedStore.distance : 'Away from master pin';
+        cam.classList.add('opacity-40', 'pointer-events-none');
+      }
+    }
+
+    function toggleAddressEdit() {
+      document.getElementById('editAddressForm').classList.toggle('hidden');
+    }
+
+    function saveAddress() {
+      const updated = document.getElementById('addressInput').value;
+      const staticAddr = document.getElementById('staticAddress');
+      currentSelectedStore.address = updated;
+      staticAddr.textContent = updated + ' (Edited by Executive - Variance Flagged)';
+      staticAddr.classList.add('border-amber-400', 'bg-amber-50');
+      toggleAddressEdit();
+    }
+
+    async function initCamera() {
+      const video = document.getElementById('webcam');
+      const placeholder = document.getElementById('cameraPlaceholder');
+      try {
+        videoStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+        video.srcObject = videoStream;
+        video.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+        document.getElementById('snapBtn').disabled = false;
+      } catch (err) {
+        alert('Live camera hardware restricted. Using simulated vision model.');
+        document.getElementById('snapBtn').disabled = false;
+      }
+    }
+
+    function captureAndAudit() {
+      const resultCard = document.getElementById('resultCard');
+      const badge = document.getElementById('complianceStatusBadge');
+      const authCount = document.getElementById('authSkuCount');
+      const unauthCount = document.getElementById('unauthSkuCount');
+      const flagDetail = document.getElementById('flagDetail');
+
+      resultCard.classList.remove('hidden');
+
+      const isViolation = Math.random() > 0.4;
+
+      if (!isViolation) {
+        badge.textContent = 'PASSED (COMPLIANT)';
+        badge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800';
+        authCount.textContent = '6 SKUs (ITC Master Chef, Prasuma, Meatigo)';
+        unauthCount.textContent = '0 Units';
+        flagDetail.className = 'p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-[11px] font-medium';
+        flagDetail.textContent = '100% Whitelist adherence. Dedicated ITC freezer unit is free of unauthorized stock.';
+        currentSelectedStore.status = 'Verified Compliant';
+        currentSelectedStore.statusClass = 'bg-emerald-100 text-emerald-800';
+      } else {
+        badge.textContent = 'FLAGGED (VIOLATION)';
+        badge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-md bg-red-100 text-red-800';
+        authCount.textContent = '3 SKUs (ITC Master Chef Creations)';
+        unauthCount.textContent = '4 SKUs (Competitor Brands Detected)';
+        flagDetail.className = 'p-2.5 bg-red-50 border border-red-200 rounded-xl text-red-700 text-[11px] font-medium';
+        flagDetail.textContent = 'FLAGGED: Non-whitelisted competitor frozen items detected inside dedicated freezer.';
+        currentSelectedStore.status = 'Flagged Violation';
+        currentSelectedStore.statusClass = 'bg-red-100 text-red-800';
+      }
+    }
+
+    function submitAudit() {
+      alert(`Audit for ${currentSelectedStore.name} successfully submitted to ITC Master DB!`);
+      backToStoreList();
+    }
+  </script>
+</body>
+</html>
