@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>ITC PV Pulse | Freezer Verification</title>
+  <title>ITC PV Pulse | Physical Asset Verification</title>
   <link rel="manifest" href="./manifest.json" />
   <meta name="theme-color" content="#0d3b66" />
   <script src="https://cdn.tailwindcss.com"></script>
@@ -28,32 +28,26 @@
 </head>
 <body class="bg-[#E9EFF7] min-h-screen flex items-center justify-center p-3 antialiased">
 
+  <!-- Shared ITC Logo Definition as Base64 Vector Embed -->
+  <script>
+    const ITC_LOGO_SRC = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 450 400'><path fill='%230A3778' d='M225,30 L45,300 L130,300 L225,145 L320,300 L405,300 Z'/><path fill='%230A3778' d='M225,75 L180,300 L270,300 Z'/><path fill='%23FFFFFF' d='M225,85 L200,240 L250,240 Z'/><path fill='%230A3778' d='M110,240 L160,160 L185,240 Z'/><path fill='%230A3778' d='M175,230 L275,230 L260,260 L190,260 Z'/><path fill='%230A3778' d='M205,210 L245,210 L240,260 L210,260 Z'/><path fill='%230A3778' d='M265,240 L290,160 L340,240 Z'/><text x='225' y='360' font-family='Times New Roman, Georgia, serif' font-size='48' font-weight='bold' fill='%230A3778' text-anchor='middle' letter-spacing='1'>Enduring Value</text></svg>";
+  </script>
+
   <!-- Main App Shell -->
   <div id="app" class="w-full max-w-[440px] min-h-[640px] flex flex-col justify-center relative">
     
     <!-- ==================== SCREEN 1: LOGIN CARD ==================== -->
     <section id="loginScreen" class="w-full bg-white rounded-[28px] shadow-[0_12px_40px_rgba(10,55,120,0.08)] border-t-[6px] border-[#0A3778] p-8 sm:p-9 relative overflow-hidden transition-all duration-300">
       
-      <!-- Top Logo Section (Inline Vector) -->
+      <!-- Top Logo Section -->
       <div class="flex flex-col items-center justify-center pt-2">
-        <svg viewBox="0 0 450 400" class="w-36 h-32 object-contain" fill="#0A3778">
-          <!-- Main Outer Triangle -->
-          <polygon points="225,25 60,300 390,300" />
-          <!-- White Center Spire Cutout -->
-          <polygon points="225,75 198,240 252,240" fill="#FFFFFF" />
-          <polygon points="225,120 216,240 234,240" fill="#FFFFFF" />
-          <!-- ITC Letter Cutout Bands -->
-          <!-- I-Bar Cutout -->
-          <polygon points="120,300 155,245 185,245 150,300" fill="#FFFFFF" />
-          <!-- T-Bar Cutout -->
-          <polygon points="190,252 260,252 245,300 205,300" fill="#FFFFFF" />
-          <!-- C-Bar Cutout -->
-          <polygon points="265,245 295,245 330,300 300,300" fill="#FFFFFF" />
-          <polygon points="280,265 315,265 305,285 270,285" fill="#0A3778" />
-          <!-- Enduring Value Serif Subtext -->
-          <text x="225" y="365" font-family="'Times New Roman', Georgia, serif" font-size="46" font-weight="bold" fill="#0A3778" text-anchor="middle" letter-spacing="1.5">Enduring Value</text>
-        </svg>
-        <div class="w-full h-[1px] bg-slate-200 mt-4 mb-6"></div>
+        <img 
+          src="itc-logo.jpg" 
+          alt="ITC Enduring Value" 
+          class="h-28 w-auto object-contain"
+          onerror="this.onerror=null; this.src=ITC_LOGO_SRC;" 
+        />
+        <div class="w-full h-[1px] bg-slate-200 mt-6 mb-6"></div>
       </div>
 
       <!-- Typography -->
@@ -69,7 +63,7 @@
         </p>
       </div>
 
-      <!-- Login Form -->
+      <!-- Form -->
       <form onsubmit="handleLogin(event)" class="space-y-4">
         <div>
           <label class="block text-[13px] font-bold text-[#0D2447] mb-1.5">Username</label>
@@ -94,7 +88,7 @@
         </div>
 
         <div id="loginError" class="text-red-600 text-xs hidden font-medium text-center pt-1">
-          Invalid credentials. (Use itcadmin / ITC@2026)
+          Invalid username or password. (Use itcadmin / ITC@2026)
         </div>
 
         <div class="pt-2">
@@ -107,7 +101,6 @@
         </div>
       </form>
 
-      <!-- Bottom Card Footnote -->
       <div class="mt-8 text-center">
         <p class="text-[11.5px] text-slate-500 font-medium">
           ITC Limited &middot; Internal use only
@@ -121,14 +114,12 @@
       <!-- Top Bar -->
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
         <div class="flex items-center space-x-2.5">
-          <svg viewBox="0 0 450 400" class="h-8 w-auto object-contain" fill="#0A3778">
-            <polygon points="225,25 60,300 390,300" />
-            <polygon points="225,75 198,240 252,240" fill="#FFFFFF" />
-            <polygon points="120,300 155,245 185,245 150,300" fill="#FFFFFF" />
-            <polygon points="190,252 260,252 245,300 205,300" fill="#FFFFFF" />
-            <polygon points="265,245 295,245 330,300 300,300" fill="#FFFFFF" />
-            <text x="225" y="365" font-family="'Times New Roman', serif" font-size="52" font-weight="bold" fill="#0A3778" text-anchor="middle">Enduring Value</text>
-          </svg>
+          <img 
+            src="itc-logo.jpg" 
+            alt="ITC Logo" 
+            class="h-7 w-auto object-contain" 
+            onerror="this.onerror=null; this.src=ITC_LOGO_SRC;"
+          />
           <div>
             <h2 class="text-xs font-bold text-[#0D2447]">Assigned Route Beats</h2>
             <p class="text-[10px] text-slate-400">Bangalore South Cluster</p>
@@ -159,7 +150,7 @@
 
       <!-- Store Cards Container -->
       <div id="storeListContainer" class="space-y-3 max-h-[420px] overflow-y-auto pr-1">
-        <!-- Rendered dynamically -->
+        <!-- Dynamic content rendered via JS -->
       </div>
     </section>
 
@@ -173,14 +164,12 @@
           <span>Stores</span>
         </button>
         <div class="flex items-center space-x-2">
-          <svg viewBox="0 0 450 400" class="h-6 w-auto object-contain" fill="#0A3778">
-            <polygon points="225,25 60,300 390,300" />
-            <polygon points="225,75 198,240 252,240" fill="#FFFFFF" />
-            <polygon points="120,300 155,245 185,245 150,300" fill="#FFFFFF" />
-            <polygon points="190,252 260,252 245,300 205,300" fill="#FFFFFF" />
-            <polygon points="265,245 295,245 330,300 300,300" fill="#FFFFFF" />
-            <text x="225" y="365" font-family="'Times New Roman', serif" font-size="52" font-weight="bold" fill="#0A3778" text-anchor="middle">Enduring Value</text>
-          </svg>
+          <img 
+            src="itc-logo.jpg" 
+            alt="ITC Logo" 
+            class="h-6 w-auto object-contain" 
+            onerror="this.onerror=null; this.src=ITC_LOGO_SRC;"
+          />
           <div class="text-right">
             <span id="activeStoreCode" class="text-[10px] font-extrabold bg-blue-100 text-[#0A3778] px-2 py-0.5 rounded">STR-CODE</span>
             <h2 id="activeStoreName" class="text-xs font-bold text-[#0D2447] mt-0.5 max-w-[140px] truncate">Store Name</h2>
