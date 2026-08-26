@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>ITC PV Pulse | Freezer Verification</title>
+  <title>ITC PV Pulse | Physical Asset Verification</title>
   <link rel="manifest" href="./manifest.json" />
-  <meta name="theme-color" content="#0d3b66" />
+  <meta name="theme-color" content="#0A3778" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,25 +34,31 @@
     <!-- ==================== SCREEN 1: LOGIN CARD ==================== -->
     <section id="loginScreen" class="w-full bg-white rounded-[28px] shadow-[0_12px_40px_rgba(10,55,120,0.08)] border-t-[6px] border-[#0A3778] p-8 sm:p-9 relative overflow-hidden transition-all duration-300">
       
-      <!-- Top Logo Section (Inline Vector) -->
+      <!-- Top Logo Section (Exact Geometric ITC Emblem) -->
       <div class="flex flex-col items-center justify-center pt-2">
-        <svg viewBox="0 0 450 400" class="w-36 h-32 object-contain" fill="#0A3778">
-          <!-- Main Outer Triangle -->
-          <polygon points="225,25 60,300 390,300" />
-          <!-- White Center Spire Cutout -->
-          <polygon points="225,75 198,240 252,240" fill="#FFFFFF" />
-          <polygon points="225,120 216,240 234,240" fill="#FFFFFF" />
-          <!-- ITC Letter Cutout Bands -->
-          <!-- I-Bar Cutout -->
-          <polygon points="120,300 155,245 185,245 150,300" fill="#FFFFFF" />
-          <!-- T-Bar Cutout -->
-          <polygon points="190,252 260,252 245,300 205,300" fill="#FFFFFF" />
-          <!-- C-Bar Cutout -->
-          <polygon points="265,245 295,245 330,300 300,300" fill="#FFFFFF" />
-          <polygon points="280,265 315,265 305,285 270,285" fill="#0A3778" />
-          <!-- Enduring Value Serif Subtext -->
-          <text x="225" y="365" font-family="'Times New Roman', Georgia, serif" font-size="46" font-weight="bold" fill="#0A3778" text-anchor="middle" letter-spacing="1.5">Enduring Value</text>
-        </svg>
+        <div class="w-48 h-32 flex flex-col items-center justify-center">
+          <svg viewBox="0 0 320 280" class="w-full h-full object-contain">
+            <!-- Left Triangle Wing -->
+            <polygon points="160,18 160,95 62,215 28,215" fill="#0A3778" />
+            <!-- Right Triangle Wing -->
+            <polygon points="160,18 160,95 258,215 292,215" fill="#0A3778" />
+            <!-- Center Sharp Spire -->
+            <polygon points="160,20 142,130 160,165 178,130" fill="#0A3778" />
+            
+            <!-- Letter 'I' -->
+            <polygon points="68,215 98,155 130,155 100,215" fill="#0A3778" />
+            
+            <!-- Letter 'T' Top Bar & Center Stem -->
+            <polygon points="126,155 204,155 198,172 138,172" fill="#0A3778" />
+            <polygon points="152,172 178,172 156,215 130,215" fill="#0A3778" />
+            
+            <!-- Letter 'C' -->
+            <polygon points="214,155 264,155 248,173 228,173 216,197 236,197 228,215 198,215" fill="#0A3778" />
+            
+            <!-- Enduring Value Serif Text -->
+            <text x="160" y="258" font-family="'Times New Roman', Georgia, serif" font-size="32" font-weight="bold" fill="#0A3778" text-anchor="middle" letter-spacing="0.5">Enduring Value</text>
+          </svg>
+        </div>
         <div class="w-full h-[1px] bg-slate-200 mt-4 mb-6"></div>
       </div>
 
@@ -69,7 +75,7 @@
         </p>
       </div>
 
-      <!-- Login Form -->
+      <!-- Form -->
       <form onsubmit="handleLogin(event)" class="space-y-4">
         <div>
           <label class="block text-[13px] font-bold text-[#0D2447] mb-1.5">Username</label>
@@ -94,7 +100,7 @@
         </div>
 
         <div id="loginError" class="text-red-600 text-xs hidden font-medium text-center pt-1">
-          Invalid credentials. (Use itcadmin / ITC@2026)
+          Invalid username or password. (Use itcadmin / ITC@2026)
         </div>
 
         <div class="pt-2">
@@ -107,7 +113,6 @@
         </div>
       </form>
 
-      <!-- Bottom Card Footnote -->
       <div class="mt-8 text-center">
         <p class="text-[11.5px] text-slate-500 font-medium">
           ITC Limited &middot; Internal use only
@@ -121,14 +126,17 @@
       <!-- Top Bar -->
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
         <div class="flex items-center space-x-2.5">
-          <svg viewBox="0 0 450 400" class="h-8 w-auto object-contain" fill="#0A3778">
-            <polygon points="225,25 60,300 390,300" />
-            <polygon points="225,75 198,240 252,240" fill="#FFFFFF" />
-            <polygon points="120,300 155,245 185,245 150,300" fill="#FFFFFF" />
-            <polygon points="190,252 260,252 245,300 205,300" fill="#FFFFFF" />
-            <polygon points="265,245 295,245 330,300 300,300" fill="#FFFFFF" />
-            <text x="225" y="365" font-family="'Times New Roman', serif" font-size="52" font-weight="bold" fill="#0A3778" text-anchor="middle">Enduring Value</text>
-          </svg>
+          <div class="w-9 h-8 flex items-center justify-center">
+            <svg viewBox="0 0 320 280" class="w-full h-full object-contain">
+              <polygon points="160,18 160,95 62,215 28,215" fill="#0A3778" />
+              <polygon points="160,18 160,95 258,215 292,215" fill="#0A3778" />
+              <polygon points="160,20 142,130 160,165 178,130" fill="#0A3778" />
+              <polygon points="68,215 98,155 130,155 100,215" fill="#0A3778" />
+              <polygon points="126,155 204,155 198,172 138,172" fill="#0A3778" />
+              <polygon points="152,172 178,172 156,215 130,215" fill="#0A3778" />
+              <polygon points="214,155 264,155 248,173 228,173 216,197 236,197 228,215 198,215" fill="#0A3778" />
+            </svg>
+          </div>
           <div>
             <h2 class="text-xs font-bold text-[#0D2447]">Assigned Route Beats</h2>
             <p class="text-[10px] text-slate-400">Bangalore South Cluster</p>
@@ -173,14 +181,17 @@
           <span>Stores</span>
         </button>
         <div class="flex items-center space-x-2">
-          <svg viewBox="0 0 450 400" class="h-6 w-auto object-contain" fill="#0A3778">
-            <polygon points="225,25 60,300 390,300" />
-            <polygon points="225,75 198,240 252,240" fill="#FFFFFF" />
-            <polygon points="120,300 155,245 185,245 150,300" fill="#FFFFFF" />
-            <polygon points="190,252 260,252 245,300 205,300" fill="#FFFFFF" />
-            <polygon points="265,245 295,245 330,300 300,300" fill="#FFFFFF" />
-            <text x="225" y="365" font-family="'Times New Roman', serif" font-size="52" font-weight="bold" fill="#0A3778" text-anchor="middle">Enduring Value</text>
-          </svg>
+          <div class="w-8 h-7 flex items-center justify-center">
+            <svg viewBox="0 0 320 280" class="w-full h-full object-contain">
+              <polygon points="160,18 160,95 62,215 28,215" fill="#0A3778" />
+              <polygon points="160,18 160,95 258,215 292,215" fill="#0A3778" />
+              <polygon points="160,20 142,130 160,165 178,130" fill="#0A3778" />
+              <polygon points="68,215 98,155 130,155 100,215" fill="#0A3778" />
+              <polygon points="126,155 204,155 198,172 138,172" fill="#0A3778" />
+              <polygon points="152,172 178,172 156,215 130,215" fill="#0A3778" />
+              <polygon points="214,155 264,155 248,173 228,173 216,197 236,197 228,215 198,215" fill="#0A3778" />
+            </svg>
+          </div>
           <div class="text-right">
             <span id="activeStoreCode" class="text-[10px] font-extrabold bg-blue-100 text-[#0A3778] px-2 py-0.5 rounded">STR-CODE</span>
             <h2 id="activeStoreName" class="text-xs font-bold text-[#0D2447] mt-0.5 max-w-[140px] truncate">Store Name</h2>
@@ -263,7 +274,7 @@
 
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js').catch(console.error);
+      navigator.serviceWorker.register('./sw.js?v=3').catch(console.error);
     }
 
     const STORE_MASTER = [
